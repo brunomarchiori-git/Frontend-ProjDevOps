@@ -1,0 +1,77 @@
+:root {
+  font-family: 'Poppins', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  
+  color-scheme: light;
+  color: #213547;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --off-white-bg: #FAFAFA;
+  --card-bg: #FFFFFF;
+  --primary-coral: #FF5A5F;
+  --primary-coral-hover: #E04E53;
+  --border-color: #E5E5E5;
+  --text-primary: #222222;
+  --text-secondary: #717171;
+  --shadow-subtle: 0 12px 24px rgba(0,0,0,0.06); 
+  --bg-gradient: linear-gradient(135deg, #F1ECE6 0%, #FAFAFA 100%);
+
+  --btn-disabled: #CCCCCC;
+  --input-bg: #FFFFFF;
+  --input-placeholder: #717171;
+  --modal-bg: #FFFFFF;
+  --dropdown-bg: #FFFFFF;
+  --dropdown-hover: #F7F7F7;
+  --icon-color: #222222;
+  --tag-bg: #F0F0F0;
+  --tag-text: #717171;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  color: #EDEDED;
+
+  --off-white-bg: #141414;
+  --card-bg: #1E1E1E;
+  --border-color: #2A2A2A;
+  --text-primary: #EDEDED;
+  --text-secondary: #B5B5B5;
+  --shadow-subtle: 0 12px 24px rgba(0,0,0,0.4);
+  --bg-gradient: linear-gradient(135deg, #1A1A1A 0%, #141414 100%);
+
+  --btn-disabled: #8A3A3D;
+  --input-bg: #1C1C1C;
+  --input-placeholder: #8E8E8E;
+  --modal-bg: #1E1E1E;
+  --dropdown-bg: #1E1E1E;
+  --dropdown-hover: #2A2A2A;
+  --icon-color: #EDEDED;
+  --tag-bg: #2A2A2A;
+  --tag-text: #B5B5B5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--off-white-bg);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  font-family: inherit;
+}
+

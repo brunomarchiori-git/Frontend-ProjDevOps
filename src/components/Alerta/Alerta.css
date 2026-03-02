@@ -1,0 +1,111 @@
+.alerta {
+    position: fixed;
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10001;
+    min-width: 280px;
+    max-width: 90%;
+    background-color: var(--primary-coral);
+    color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(255, 90, 95, 0.3);
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+.alerta-enter {
+    animation: alertaSlideIn 0.3s ease-out forwards;
+}
+.alerta-exit {
+    animation: alertaSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes alertaSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes alertaSlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
+
+.alerta-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+}
+
+.alerta-icon {
+    flex-shrink: 0;
+    opacity: 0.95;
+}
+
+.alerta-message {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.alerta-progress-bar {
+    width: 100%;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.alerta-progress {
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: width 50ms linear;
+}
+
+.alerta-success {
+    background-color: var(--primary-coral);
+}
+
+.alerta-error {
+    background-color: #DC3545;
+    box-shadow: 0 8px 24px rgba(220, 53, 69, 0.3);
+}
+
+.alerta-info {
+    background-color: #0D6EFD;
+    box-shadow: 0 8px 24px rgba(13, 110, 253, 0.3);
+}
+
+@media (max-width: 600px) {
+    .alerta {
+        top: 80px;
+        min-width: auto;
+        width: calc(100% - 2rem);
+        max-width: calc(100% - 2rem);
+    }
+}
+
+@media (max-width: 375px) {
+    .alerta {
+        top: 70px;
+    }
+
+    .alerta-content {
+        padding: 0.875rem 1rem;
+    }
+
+    .alerta-message {
+        font-size: 0.875rem;
+    }
+}

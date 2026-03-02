@@ -1,0 +1,23 @@
+.botao-coral {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--primary-coral);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.botao-coral:hover {
+  background-color: var(--primary-coral-hover);
+}
+
+.botao-coral:disabled {
+  background-color: var(--btn-disabled);
+  cursor: not-allowed;
+}
+
