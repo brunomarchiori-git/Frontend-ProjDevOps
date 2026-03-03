@@ -7,8 +7,13 @@ on:
       - develop
   pull_request:
 
+env:
+  IMAGE_NAME: brunomarch/build-react
+  NODE_VERSION: '24.14.0'
+
 jobs:
   build:
+    name: Build e Test
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -20,23 +25,44 @@ jobs:
         node-version: '24.14.0'
         cache: 'npm'
 
-        
-
     - name: Install deps
       run: npm ci
 
     - name: Build
       run: npm run build
 
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}  
+  docker-build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push'
 
-    - name: Build and push image to Docker Hub
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        push: true
-        tags: brunomarch/build-react:${{ github.sha }}, brunomarch/build-react:latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build da imagem (sem push)
+        uses: ./.github/actions/docker-build-push
+        with:
+          image-name: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ github.sha }}
+          push: "false"
+
+  docker-push:
+    name: Docker Push
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build e Push da imagem
+        uses: ./.github/actions/docker-build-push
+        with:
+          image-name: ${{ env.IMAGE_NAME }}
+          image-tag: ${{ github.sha }}
+          push: "true"
+          docker-username: ${{ secrets.DOCKER_USERNAME }}
+          docker-password: ${{ secrets.DOCKER_PASSWORD }}
