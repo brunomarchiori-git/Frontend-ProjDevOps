@@ -38,7 +38,7 @@ runs:
       uses: docker/build-push-action@v6
       with:
         context: .
-        push: "${{ inputs.push }}"
+        push: ${{ inputs.push == 'true' || inputs.push == true }}
         tags: |
           "${{ inputs.image-name }}:${{ inputs.image-tag }}"
           "${{ inputs.image-name }}:latest"
