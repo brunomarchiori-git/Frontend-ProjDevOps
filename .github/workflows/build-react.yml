@@ -55,6 +55,6 @@ jobs:
         with:
           image-name: "${{ env.IMAGE_NAME }}"
           image-tag: "${{ github.sha }}"
-          push: "${{ steps.docker-config.outputs.PUSH_IMAGE }}"
+          push: ${{ steps.docker-config.outputs.PUSH_IMAGE }}
           docker-username: "${{ secrets.DOCKER_USERNAME }}"
           docker-password: "${{ secrets.DOCKER_PASSWORD }}"
