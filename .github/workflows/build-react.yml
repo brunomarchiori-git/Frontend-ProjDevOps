@@ -9,30 +9,30 @@ on:
 
 env:
   IMAGE_NAME: brunomarch/build-react
-  NODE_VERSION: '24.14.0'
+  NODE_VERSION: "24.14.0"
 
 jobs:
   build:
     name: Build e Test
     runs-on: [self-hosted, Linux, build]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
 
-    - name: Setup Node
-      uses: actions/setup-node@v6
-      with:
-        node-version: '24.14.0'
-        cache: 'npm'
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
 
-    - name: Install deps
-      run: npm ci
+      - name: Install deps
+        run: npm ci
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
 
-  docker-build:
-    name: Build Docker Image
+  docker:
+    name: Docker Build & Push
     runs-on: [self-hosted, Linux, build]
     needs: build
     if: github.event_name == 'push'
@@ -41,28 +41,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build da imagem (sem push)
+      - name: Definir se deve fazer push
+        id: docker-config
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "PUSH_IMAGE=true" >> $GITHUB_ENV
+          else
+            echo "PUSH_IMAGE=false" >> $GITHUB_ENV
+          fi
+
+      - name: Build (e Push condicional) da imagem
         uses: ./.github/actions/docker-build-push
         with:
-          image-name: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ github.sha }}
-          push: "false"
-
-  docker-push:
-    name: Docker Push
-    runs-on: [self-hosted, Linux, build]
-    needs: docker-build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Build e Push da imagem
-        uses: ./.github/actions/docker-build-push
-        with:
-          image-name: ${{ env.IMAGE_NAME }}
-          image-tag: ${{ github.sha }}
-          push: "true"
-          docker-username: ${{ secrets.DOCKER_USERNAME }}
-          docker-password: ${{ secrets.DOCKER_PASSWORD }}
+          image-name: "${{ env.IMAGE_NAME }}"
+          image-tag: "${{ github.sha }}"
+          push: "${{ steps.docker-config.outputs.PUSH_IMAGE }}"
+          docker-username: "${{ secrets.DOCKER_USERNAME }}"
+          docker-password: "${{ secrets.DOCKER_PASSWORD }}"
