@@ -41,20 +41,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Definir se deve fazer push
-        id: docker-config
-        run: |
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            echo "PUSH_IMAGE=true" >> $GITHUB_ENV
-          else
-            echo "PUSH_IMAGE=false" >> $GITHUB_ENV
-          fi
-
       - name: Build (e Push condicional) da imagem
         uses: ./.github/actions/docker-build-push
         with:
           image-name: "${{ env.IMAGE_NAME }}"
           image-tag: "${{ github.sha }}"
-          push: ${{ steps.docker-config.outputs.PUSH_IMAGE }}
+          push: ${{ github.ref == 'refs/heads/main' }}
           docker-username: "${{ secrets.DOCKER_USERNAME }}"
           docker-password: "${{ secrets.DOCKER_PASSWORD }}"
