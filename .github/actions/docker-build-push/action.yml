@@ -42,3 +42,5 @@ runs:
         tags: |
           "${{ inputs.image-name }}:${{ inputs.image-tag }}"
           "${{ inputs.image-name }}:latest"
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
