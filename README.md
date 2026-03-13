@@ -1,16 +1,25 @@
-# React + Vite
+## Reflexão Técnica
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 1. O que aprendi sobre o fluxo e seu funcionamento
 
-Currently, two official plugins are available:
+Durante o desafio consegui entender melhor, na prática, a importância de um fluxo de CI/CD. Sem esse tipo de processo automatizado, o código ficaria muito mais sujeito a erros tanto no repositório quanto na etapa de deploy. Mesmo que CI/CD não elimine todos os problemas, ele reduz bastante os riscos e permite que o processo de entrega seja melhorado continuamente.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Também passei a entender melhor algumas etapas do pipeline, como checkout do código, execução de containers Docker durante o build e configuração de ambientes como Node e Java. Nos cursos eu já tinha visto essas coisas, mas de forma mais superficial. Nesse desafio precisei ler documentação e entender o motivo de cada etapa existir, o que ajudou muito a consolidar o aprendizado.
 
-## React Compiler
+### 2. Qual parte foi mais desafiadora e por quê
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O maior desafio foi o início do projeto. Nos cursos que fiz, os conteúdos de DevOps normalmente eram ensinados de forma separada, como GitHub Actions, Docker ou Linux. Quando precisei juntar tudo em um único fluxo funcional, percebi que a parte mais difícil era justamente entender por onde começar e como organizar cada etapa.
 
-## Expanding the ESLint configuration
+Outro desafio foi identificar melhorias e aplicar boas práticas. Analisei bastante documentação e também alguns repositórios de referência, como o Collaborator que utilizamos na NEKI. Nesse processo também acabei implementando algumas melhorias por conta própria, como configurar um runner, ajustar armazenamento da máquina e aplicar proteções de branch no GitHub para evitar pushes diretos na branch principal.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 3. O que eu faria diferente se tivesse mais tempo
+
+Durante o desenvolvimento eu fiz o deploy da aplicação em uma máquina virtual para validar se tudo estava funcionando corretamente. A aplicação rodou bem, mas se tivesse mais tempo eu provavelmente automatizaria melhor essa etapa de deploy para deixar o processo mais completo.
+
+Uma possibilidade seria utilizar uma ferramenta como ArgoCD para gerenciar a atualização das imagens e permitir rollback em caso de erro. Também seria interessante utilizar Kubernetes para trabalhar com múltiplas réplicas e escalabilidade. No entanto, preferi manter a solução mais simples por estar utilizando o plano gratuito do Google Cloud e para evitar custos desnecessários.
+
+### 4. Por que DevOps é importante no contexto da NEKI
+
+DevOps não é apenas um conjunto de ferramentas, mas uma cultura que busca melhorar a forma como software é desenvolvido e entregue. Com processos automatizados de build, teste e deploy, as equipes conseguem reduzir erros, acelerar entregas e ter mais confiança no que está sendo colocado em produção.
+
+No contexto da NEKI isso é importante porque aumenta a confiabilidade do processo de desenvolvimento e reduz riscos durante as entregas. Quanto mais automatizado e bem definido for o fluxo, menor é a chance de falhas humanas afetarem o produto final, o que também contribui para a credibilidade da empresa.

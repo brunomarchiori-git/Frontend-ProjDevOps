@@ -1,15 +1,14 @@
-name: React Build
+name: CI - React Build e Test
 
 on:
-  push:
-    branches:
-      - main
-      - develop
   pull_request:
+    branches:
+      - develop
+      - main
 
 env:
-  IMAGE_NAME: brunomarch/build-react
   NODE_VERSION: "24.14.0"
+  IMAGE_NAME: brunomarch/build-react
 
 jobs:
   build:
@@ -31,21 +30,18 @@ jobs:
       - name: Build
         run: npm run build
 
-  docker:
-    name: Docker Build & Push
+  docker-build:
+    name: Docker Build (validação)
     runs-on: [self-hosted, Linux, build]
     needs: build
-    if: github.event_name == 'push'
 
     steps:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Build (e Push condicional) da imagem
+      - name: Build da imagem (sem push)
         uses: ./.github/actions/docker-build-push
         with:
           image-name: "${{ env.IMAGE_NAME }}"
           image-tag: "${{ github.sha }}"
-          push: ${{ github.ref == 'refs/heads/main' }}
-          docker-username: "${{ secrets.DOCKER_USERNAME }}"
-          docker-password: "${{ secrets.DOCKER_PASSWORD }}"
+          push: "false"
