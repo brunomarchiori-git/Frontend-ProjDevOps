@@ -1,0 +1,27 @@
+name: CD - Docker Build e Push
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  IMAGE_NAME: brunomarch/build-react
+
+jobs:
+  docker:
+    name: Docker Build e Push
+    runs-on: [self-hosted, Linux, build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Build e Push da imagem
+        uses: ./.github/actions/docker-build-push
+        with:
+          image-name: "${{ env.IMAGE_NAME }}"
+          image-tag: "${{ github.sha }}"
+          push: "true"
+          docker-username: "${{ secrets.DOCKER_USERNAME }}"
+          docker-password: "${{ secrets.DOCKER_PASSWORD }}"
